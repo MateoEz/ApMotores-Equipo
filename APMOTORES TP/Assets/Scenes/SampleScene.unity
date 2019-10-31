@@ -141,11 +141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b87b351e3670a441bc827efbb14ae94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 0
-  damage: 0
-  velocity: 0
-  initialPosition: {x: 4.95, y: 0.5, z: 5.98}
-  prefabEnemy: {fileID: 1258991314359982, guid: 3749b9edee740c44ea7455a4fa1b7382,
+  life: 10
+  damage: 10
+  velocity: 10
+  initialPosition: {x: 15.91, y: 0.5, z: 9.56}
+  prefabEnemy: {fileID: 8435774569480473193, guid: 31707fa9357f10643a4914e327acdc64,
     type: 3}
   prefabLeader: {fileID: 1674050128692650, guid: 997eda0f844715845a30121b4553e2fd,
     type: 3}

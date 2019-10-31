@@ -30,6 +30,8 @@ public class EnemiesEditor : Editor
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         GUILayout.TextField("No afecta la Y del vector3.",_labelStyle);
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
         if (GUILayout.Button("Crear ejercito en la posicion indicada."))
         {
             enemy.SpawnEnemies();
@@ -39,6 +41,7 @@ public class EnemiesEditor : Editor
         {
             enemy.DeleteArmy();
         }*/
+
 
     }
 
