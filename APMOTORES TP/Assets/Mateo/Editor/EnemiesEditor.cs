@@ -8,6 +8,9 @@ public class EnemiesEditor : Editor
 {
     private GUIStyle _labelStyle;
     public Color color;
+
+    ArmySettings settings;
+
     private void OnEnable()
     {
         _labelStyle = new GUIStyle();
@@ -33,6 +36,23 @@ public class EnemiesEditor : Editor
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(100, 2), Color.red);
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Crear Configuraciion de ejercito"))
+        {
+            var armyConfig = ScriptableObject.CreateInstance<ArmySettings>();
+            var save = "Assets/" + "ArmyConfig.asset";
+            AssetDatabase.CreateAsset(armyConfig, save);
+            Save();
+        }
+        settings = (ArmySettings)EditorGUILayout.ObjectField("armyConfig", settings, typeof(ArmySettings),false);
+        EditorGUILayout.Space();
+        settings.armyName = EditorGUILayout.TextField("Name", settings.armyName);
+        settings.soldiers = EditorGUILayout.IntField("Soldiers", settings.soldiers);
+        settings.boss = EditorGUILayout.IntField("Leaders", settings.boss);
+        EditorGUILayout.LabelField("Formation:");
+        settings.squareFormation = EditorGUILayout.Toggle("Square", settings.squareFormation);
+        settings.triangleFormation = EditorGUILayout.Toggle("Triangle", settings.triangleFormation);
+        settings.circleFormation = EditorGUILayout.Toggle("Circle", settings.circleFormation);
         EditorGUILayout.Space();
         GUILayout.TextField("FORMACION", _labelStyle);
         EditorGUILayout.Space();
@@ -73,5 +93,9 @@ public class EnemiesEditor : Editor
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(100, 2), Color.red);
     }
 
-
+    private void Save()
+    {
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
 }
