@@ -144,12 +144,15 @@ MonoBehaviour:
   life: 10
   damage: 10
   velocity: 10
-  initialPosition: {x: 15.91, y: 0.5, z: 9.56}
-  prefabEnemy: {fileID: 8435774569480473193, guid: 31707fa9357f10643a4914e327acdc64,
+  prefabEnemySquare: {fileID: 8435774569480473193, guid: 31707fa9357f10643a4914e327acdc64,
+    type: 3}
+  prefabEnemyTriangle: {fileID: 8368866716962242925, guid: af2b3c639fa439647840b43f03b1aa4c,
+    type: 3}
+  prefabEnemyCircle: {fileID: 3544865521593156163, guid: 03d45d532b9354b4f85594dd054acab8,
     type: 3}
   prefabLeader: {fileID: 1674050128692650, guid: 997eda0f844715845a30121b4553e2fd,
     type: 3}
-  enemies: []
+  Position: {x: 35.81, y: 0.5, z: 0}
 --- !u!4 &46367678
 Transform:
   m_ObjectHideFlags: 0
@@ -158,7 +161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46367676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.341133, y: 1.2827798, z: -2.9035366}
+  m_LocalPosition: {x: -7, y: 1.2827798, z: -2.9035366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

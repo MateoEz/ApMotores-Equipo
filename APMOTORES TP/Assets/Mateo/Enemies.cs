@@ -7,29 +7,57 @@ public class Enemies : MonoBehaviour
     public float life;
     public float damage;
     public float velocity;
-    public Vector3 initialPosition;
-    public GameObject prefabEnemy;
+    public GameObject prefabEnemySquare;
+    public GameObject prefabEnemyTriangle;
+    public GameObject prefabEnemyCircle;
     public GameObject prefabLeader;
     public static Enemies Instance;
-    public List<GameObject> enemies = new List<GameObject>();
+    public Vector3 Position;
+    private List<GameObject> enemies = new List<GameObject>();
     private bool deleted;
+    private GameObject _armySquare;
+    private GameObject _armyCircle;
+    private GameObject _armyTriangle;
+    private GameObject _leader;
     private void Start()
     {
         Instance = this;
     }
-
-    public void DeleteArmy()
+    public void DeleteArmySquare()
     {
-        deleted = true;
+        DestroyImmediate(_armySquare);
+        DestroyImmediate(_leader);
     }
-
-    public void SpawnEnemies()
+    public void DeleteArmyCircle()
     {
-        var enemy = Instantiate(prefabEnemy);
-        initialPosition.y = 0.5f;
-        enemy.transform.position = initialPosition;
+        DestroyImmediate(_armyCircle);
+    }
+    public void DeleteArmyTriangle()
+    {
+        DestroyImmediate(_armyTriangle);
+    }
+    public void SpawnEnemiesSquare()
+    {
+        var enemy = Instantiate(prefabEnemySquare);
+        Position.y = 0.5f;
+        enemy.transform.position = Position;
         var leader = Instantiate(prefabLeader);
-        leader.transform.position = initialPosition + transform.forward * 5 + transform.right *1;
+        leader.transform.position = Position + transform.forward * 5 + transform.right *1;
+        _armySquare = enemy;
+        _leader = leader;
     }
-
+    public void SpawnEnemiesCircle()
+    {
+        var enemy = Instantiate(prefabEnemyCircle);
+        Position.y = 0.5f;
+        enemy.transform.position = Position;
+        _armyCircle = enemy;
+    }
+    public void SpawnEnemiesTriangle()
+    {
+        var enemy = Instantiate(prefabEnemyTriangle);
+        Position.y = 0.5f;
+        enemy.transform.position = Position;
+        _armyTriangle = enemy;
+    }
 }
