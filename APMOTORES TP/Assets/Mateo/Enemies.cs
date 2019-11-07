@@ -12,7 +12,7 @@ public class Enemies : MonoBehaviour
     public GameObject prefabEnemyCircle;
     public GameObject prefabLeader;
     public static Enemies Instance;
-    public Vector3 Position;
+    public static Vector3 Position;
     private List<GameObject> enemies = new List<GameObject>();
     private bool deleted;
     private GameObject _armySquare;
