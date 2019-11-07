@@ -17,14 +17,18 @@ public class ArmyWindow : EditorWindow
     ScriptableObject soldierConfig;
     ScriptableObject armyConfig;
     GameObject wp;
-    GameObject singleSoldierSpawned;
+    public GameObject singleSoldierSpawned;
     public Vector3 pos;
+    public Quaternion Rotation;
     public Vector3 soldierSpawnPos;
+    public Vector3 Scale;
+    public int NumOfEnemies;
     float spawnRadius = 5f;
     private GUIStyle labelStyle;
     float objectScale;
     string nameBase = "";
     string save;
+    public int NumofWaypoints;
 
     /*private void SpawnObject()
     {
@@ -46,10 +50,19 @@ public class ArmyWindow : EditorWindow
         GameObject objectNull = Instantiate(wp,pos,Quaternion.identity);
         objectNull.transform.position = pos;
         objectNull.name = nameBase;
+        NumofWaypoints++;
     }
 
     public void SpawnSoldier()
     {
+
+        Instantiate(singleSoldierSpawned, pos, Rotation);
+        pos = pos + Vector3.right * 2;
+        singleSoldierSpawned.GetComponent<Enemy>().life = soldierSet.life;
+        singleSoldierSpawned.GetComponent<Enemy>().damage = soldierSet.damage;
+        singleSoldierSpawned.GetComponent<Enemy>().velocity = soldierSet.speed;
+        singleSoldierSpawned.transform.localScale = Scale;
+
         
     } 
 
@@ -148,7 +161,15 @@ public class ArmyWindow : EditorWindow
 
         if (GUILayout.Button("Spawn Army"))
         {
+            for (int i = 0; i < NumofWaypoints; i++)
+            {
+                Instantiate(singleSoldierSpawned, wp.transform.position, Rotation);
+                singleSoldierSpawned.GetComponent<Enemy>().life = soldierSet.life;
+                singleSoldierSpawned.GetComponent<Enemy>().damage = soldierSet.damage;
+                singleSoldierSpawned.GetComponent<Enemy>().velocity = soldierSet.speed;
+                singleSoldierSpawned.transform.localScale = Scale;
 
+            }
         }
 
         EditorGUILayout.Space();
