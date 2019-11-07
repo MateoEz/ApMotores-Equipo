@@ -52,7 +52,7 @@ public class EnemiesEditor : Editor
         }
         settings = (ArmySettings)EditorGUILayout.ObjectField("armyConfig", settings, typeof(ArmySettings),false);
         EditorGUILayout.Space();
-        settings.armyName = EditorGUILayout.TextField("Name", settings.armyName);
+        /*settings.armyName = EditorGUILayout.TextField("Name", settings.armyName);
         settings.soldiers = EditorGUILayout.IntField("Soldiers", settings.soldiers);
         settings.boss = EditorGUILayout.IntField("Leaders", settings.boss);
         EditorGUILayout.LabelField("Formation:");
@@ -96,10 +96,10 @@ public class EnemiesEditor : Editor
         {
             enemy.DeleteArmyCircle();
         }
-        EditorGUI.DrawRect(GUILayoutUtility.GetRect(100, 2), Color.red);
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(100, 2), Color.red);*/
     }
 
-    private void Save()
+    void Save()
     {
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
