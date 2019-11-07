@@ -19,6 +19,12 @@ public class Enemies : MonoBehaviour
     private GameObject _armyCircle;
     private GameObject _armyTriangle;
     private GameObject _leader;
+    public Vector3 FirstPos;
+    public Quaternion FirstRotation;
+    public Vector3 FirstScale;
+    public GameObject prefabEnemy;
+    public GameObject enemy;
+    public int NumOfEnemies;
     private void Start()
     {
         Instance = this;
@@ -42,7 +48,7 @@ public class Enemies : MonoBehaviour
         Position.y = 0.5f;
         enemy.transform.position = Position;
         var leader = Instantiate(prefabLeader);
-        leader.transform.position = Position + transform.forward * 5 + transform.right *1;
+        leader.transform.position = Position + transform.forward * 5 + transform.right * 1;
         _armySquare = enemy;
         _leader = leader;
     }
@@ -59,5 +65,16 @@ public class Enemies : MonoBehaviour
         Position.y = 0.5f;
         enemy.transform.position = Position;
         _armyTriangle = enemy;
+    }
+    public void SpawnParametters()
+    {
+        for (int i = 0; i < NumOfEnemies; i++)
+        {
+            FirstPos.y = 0.5f;
+            Instantiate(prefabEnemy, FirstPos, FirstRotation);
+            FirstPos = FirstPos + Vector3.right * 2;
+            enemy.transform.localScale = FirstScale;
+
+        }
     }
 }

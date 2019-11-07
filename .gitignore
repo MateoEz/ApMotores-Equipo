@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+APMOTORES TP/Assets/ArmyConfig.asset
+APMOTORES TP/Assets/ArmyConfig.asset.meta
+APMOTORES TP/Assets/Scenes/SampleScene.unity
+APMOTORES TP/Assets/Scenes/SampleScene.unity

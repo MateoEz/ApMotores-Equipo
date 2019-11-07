@@ -44,6 +44,12 @@ public class EnemiesEditor : Editor
             AssetDatabase.CreateAsset(armyConfig, save);
             Save();
         }
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Crear Enemigo."))
+        {
+            enemy.SpawnParametters();
+        }
         settings = (ArmySettings)EditorGUILayout.ObjectField("armyConfig", settings, typeof(ArmySettings),false);
         EditorGUILayout.Space();
         settings.armyName = EditorGUILayout.TextField("Name", settings.armyName);
