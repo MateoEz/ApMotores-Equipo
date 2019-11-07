@@ -44,7 +44,7 @@ public class EnemiesEditor : Editor
             AssetDatabase.CreateAsset(armyConfig, save);
             Save();
         }
-        settings = (ArmySettings)EditorGUILayout.ObjectField("armyConfig", settings, typeof(ArmySettings),false);
+        /*settings = (ArmySettings)EditorGUILayout.ObjectField("armyConfig", settings, typeof(ArmySettings),false);
         EditorGUILayout.Space();
         settings.armyName = EditorGUILayout.TextField("Name", settings.armyName);
         settings.soldiers = EditorGUILayout.IntField("Soldiers", settings.soldiers);
@@ -53,7 +53,7 @@ public class EnemiesEditor : Editor
         settings.squareFormation = EditorGUILayout.Toggle("Square", settings.squareFormation);
         settings.triangleFormation = EditorGUILayout.Toggle("Triangle", settings.triangleFormation);
         settings.circleFormation = EditorGUILayout.Toggle("Circle", settings.circleFormation);
-        EditorGUILayout.Space();
+        EditorGUILayout.Space();*/
         GUILayout.TextField("FORMACION", _labelStyle);
         EditorGUILayout.Space();
         GUILayout.TextField("Cuadrado",_labelStyle);

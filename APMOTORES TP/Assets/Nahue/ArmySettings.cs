@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Army", menuName = "Amry/Army Configuration")]
+[CreateAssetMenu(fileName = "Army", menuName = "Army/Army Configuration")]
 public class ArmySettings : ScriptableObject
 {
-    public string armyName;
-    public int soldiers;
-    public int boss;
+    public SoldierSettings soldierPreset;
+    public int numberOfSoldiers;
     public bool squareFormation;
     public bool triangleFormation;
     public bool circleFormation;

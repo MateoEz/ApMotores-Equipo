@@ -12,20 +12,20 @@ public class ArmyWindow : EditorWindow
         GetWindow(typeof(ArmyWindow));
     }
 
-    GameObject objetSpawn;
+    ArmySettings armySet;
+    SoldierSettings soldierSet;
+    ScriptableObject soldierConfig;
+    ScriptableObject armyConfig;
+    GameObject wp;
+    GameObject singleSoldierSpawned;
     public Vector3 pos;
+    public Vector3 soldierSpawnPos;
     float spawnRadius = 5f;
     private GUIStyle labelStyle;
     float objectScale;
     string nameBase = "";
+    string save;
 
-
-    private void OnEnable()
-    {
-        /*labelStyle.fontSize = 3;
-        labelStyle.fontStyle = FontStyle.BoldAndItalic;*/
-        //labelStyle.alignment = TextAnchor.MiddleCenter;
-    }
     /*private void SpawnObject()
     {
         //Vector2 spawnCircle = Random.insideUnitCircle * spawnRadius;
@@ -41,31 +41,27 @@ public class ArmyWindow : EditorWindow
 
     }*/
 
-    public void SpawnGameObject()
+    public void SpawnWaypoint()
     {
-        GameObject objectNull = Instantiate(objetSpawn,pos,Quaternion.identity);
+        GameObject objectNull = Instantiate(wp,pos,Quaternion.identity);
         objectNull.transform.position = pos;
         objectNull.name = nameBase;
-        /*if (objetSpawn == null)
-        {
-            Debug.LogWarning("Error. Please drag an object ");
-            return;
-        }
-        if (nameBase == string.Empty)
-        {
-            Debug.LogWarning("Error: Please enter a name");
-            return;
-        }*/
     }
+
+    public void SpawnSoldier()
+    {
+        
+    } 
+
     private void OnGUI()
     {
-        GUILayout.Label("Create spawn object",EditorStyles.boldLabel);
+        GUILayout.Label("Create Spawnpoint",EditorStyles.boldLabel);
         EditorGUILayout.Space();
-        objetSpawn = EditorGUILayout.ObjectField("Prefab to spawn", objetSpawn, typeof(GameObject), false) as GameObject;
+        wp = EditorGUILayout.ObjectField("Waypoint Prefab", wp, typeof(GameObject), false) as GameObject;
         EditorGUILayout.Space();
         pos = EditorGUILayout.Vector3Field("Spawn position", pos);
         EditorGUILayout.Space();
-        nameBase = EditorGUILayout.TextField("Spawn point name", nameBase);
+        nameBase = EditorGUILayout.TextField("Spawnpoint name", nameBase);
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -75,7 +71,7 @@ public class ArmyWindow : EditorWindow
         if (GUILayout.Button("Create spawn position"))
         {
 
-            if (objetSpawn == null)
+            if (wp == null)
             {
                 Debug.LogWarning("Error. Please drag an object ");
                 return;
@@ -85,55 +81,90 @@ public class ArmyWindow : EditorWindow
                 Debug.LogWarning("Error: Please enter a name");
                 return;
             }
-            SpawnGameObject();
+            SpawnWaypoint();
         }
 
         EditorGUILayout.Space();
         EditorGUILayout.Space();
+        GUILayout.Label("Create Soldiers", EditorStyles.boldLabel);
         EditorGUILayout.Space();
 
-        if (GUILayout.Button("Create enemy settings"))
+        if (GUILayout.Button("Create Soldiers Settings"))
+        {
+            soldierConfig = ScriptableObject.CreateInstance<SoldierSettings>();
+            save = "Assets/" + "SoldierConfig.asset";
+            AssetDatabase.CreateAsset(soldierConfig, save);
+            Save();
+        }
+
+        EditorGUILayout.Space();
+
+        soldierSet = (SoldierSettings)EditorGUILayout.ObjectField("Soldier Configuration", soldierSet, typeof(SoldierSettings), false);
+
+        if(soldierSet != null)
+        {
+            soldierSet.life = EditorGUILayout.IntField("Life", soldierSet.life);
+            soldierSet.speed = EditorGUILayout.IntField("Speed", soldierSet.speed);
+            soldierSet.damage = EditorGUILayout.IntField("Damage", soldierSet.damage);
+            soldierSet.prefabSoldier = (GameObject)EditorGUILayout.ObjectField("Soldier Prefab", soldierSet.prefabSoldier,typeof(GameObject), false);
+            EditorUtility.SetDirty(soldierSet);
+        }
+
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("Spawn Soldier"))
+        {
+            SpawnSoldier();
+        }
+
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        GUILayout.Label("Create Armys", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button ("Create Army Settings"))
+        {
+            armyConfig = ScriptableObject.CreateInstance<ArmySettings>();
+            save = "Assets/" + "ArmyConfig.asset";
+            AssetDatabase.CreateAsset(armyConfig, save);
+            Save();
+        }
+
+        EditorGUILayout.Space();
+
+        armySet = (ArmySettings)EditorGUILayout.ObjectField("Army Configuration", armySet, typeof(ArmySettings), false);
+
+        if (armySet != null)
+        {
+            armySet.soldierPreset = (SoldierSettings)EditorGUILayout.ObjectField("Soldier Preset", armySet.soldierPreset, typeof(SoldierSettings), false);
+            armySet.numberOfSoldiers = EditorGUILayout.IntField("Number of Soldiers", armySet.numberOfSoldiers);
+            armySet.squareFormation = EditorGUILayout.Toggle("Square Formation", armySet.squareFormation);
+            armySet.triangleFormation = EditorGUILayout.Toggle("Triangle Formation", armySet.triangleFormation);
+            armySet.circleFormation = EditorGUILayout.Toggle("Circle Formation", armySet.circleFormation);
+            EditorUtility.SetDirty(armySet);
+        }
+
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("Spawn Army"))
         {
 
         }
+
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
-        if (GUILayout.Button ("Create army configuration"))
+        void Save()
         {
-
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
-
-        /*if (GUILayout.Button("Spawnear objeto"))
-        {
-            SpawnObject();
-        }*/
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
 
         if (GUILayout.Button("Close"))
         {
-
             Close();
         }
     }
