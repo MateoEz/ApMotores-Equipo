@@ -113,9 +113,8 @@ public class ArmyWindow : EditorWindow
         EditorGUILayout.Space();
 
         soldierSet = (SoldierSettings)EditorGUILayout.ObjectField("Soldier Configuration", soldierSet, typeof(SoldierSettings), false);
-        singleSoldierSpawned = (GameObject)EditorGUILayout.ObjectField("Prefab", singleSoldierSpawned, typeof(GameObject), false);
 
-        if (soldierSet != null)
+        if(soldierSet != null)
         {
             soldierSet.life = EditorGUILayout.IntField("Life", soldierSet.life);
             soldierSet.speed = EditorGUILayout.IntField("Speed", soldierSet.speed);
