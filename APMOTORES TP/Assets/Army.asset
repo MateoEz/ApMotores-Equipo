@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ced6df931e1217c498f55eba54298f3f, type: 3}
-  m_Name: SoldierConfig
+  m_Script: {fileID: 11500000, guid: fbdab754e6beea04a95d5b943f9f79bf, type: 3}
+  m_Name: Army
   m_EditorClassIdentifier: 
-  life: 0
-  speed: 0
-  damage: 0
-  prefabSoldier: {fileID: 0}
+  soldierPreset: {fileID: 0}
+  numberOfSoldiers: 0
+  squareFormation: 0
+  triangleFormation: 0
+  circleFormation: 0
