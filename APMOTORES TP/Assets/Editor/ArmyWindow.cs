@@ -105,7 +105,8 @@ public class ArmyWindow : EditorWindow
         if (GUILayout.Button("Create Soldiers Settings"))
         {
             soldierConfig = ScriptableObject.CreateInstance<SoldierSettings>();
-            save = "Assets/" + "SoldierConfig.asset";
+            save = "Assets/Scriptable Objects/" + "SoldierConfig.asset";
+            Debug.Log("Soldier settings created in the scriptable objects folder");
             AssetDatabase.CreateAsset(soldierConfig, save);
             Save();
         }
@@ -127,7 +128,10 @@ public class ArmyWindow : EditorWindow
 
         if (GUILayout.Button("Spawn Soldier"))
         {
-            SpawnSoldier();
+            if (soldierSet != null)
+                SpawnSoldier();
+            else if(soldierSet == null)
+                Debug.LogWarning("Error: Please drag Soldier Settings");
         }
 
         EditorGUILayout.Space();
@@ -138,7 +142,8 @@ public class ArmyWindow : EditorWindow
         if (GUILayout.Button ("Create Army Settings"))
         {
             armyConfig = ScriptableObject.CreateInstance<ArmySettings>();
-            save = "Assets/" + "ArmyConfig.asset";
+            save = "Assets/Scriptable Objects/" + "ArmyConfig.asset";
+            Debug.Log("Army settings created in the scriptable objects folder");
             AssetDatabase.CreateAsset(armyConfig, save);
             Save();
         }
@@ -161,15 +166,19 @@ public class ArmyWindow : EditorWindow
 
         if (GUILayout.Button("Spawn Army"))
         {
-            for (int i = 0; i < NumofWaypoints; i++)
+            if(armySet != null)
             {
-                Instantiate(singleSoldierSpawned, wp.transform.position, Rotation);
-                singleSoldierSpawned.GetComponent<Enemy>().life = soldierSet.life;
-                singleSoldierSpawned.GetComponent<Enemy>().damage = soldierSet.damage;
-                singleSoldierSpawned.GetComponent<Enemy>().velocity = soldierSet.speed;
-                singleSoldierSpawned.transform.localScale = Scale;
-
+                for (int i = 0; i < NumofWaypoints; i++)
+                {
+                    Instantiate(singleSoldierSpawned, wp.transform.position, Rotation);
+                    singleSoldierSpawned.GetComponent<Enemy>().life = soldierSet.life;
+                    singleSoldierSpawned.GetComponent<Enemy>().damage = soldierSet.damage;
+                    singleSoldierSpawned.GetComponent<Enemy>().velocity = soldierSet.speed;
+                    singleSoldierSpawned.transform.localScale = Scale;
+                }
             }
+            else
+                Debug.LogWarning("Error: Please drag Army Settings");
         }
 
         EditorGUILayout.Space();
