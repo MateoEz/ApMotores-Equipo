@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class ArmyWindow : EditorWindow
 {
-  [MenuItem("Army/Creator")]
+    [MenuItem("Army/Creator")]
     //[MenuItem("OtraWindow/Sinecesitamos")]
     public static void ShowWindow()
     {
@@ -17,18 +17,19 @@ public class ArmyWindow : EditorWindow
     ScriptableObject soldierConfig;
     ScriptableObject armyConfig;
     GameObject wp;
-    public GameObject singleSoldierSpawned;
+    public Enemy singleSoldierSpawned;
     public Vector3 pos;
     public Quaternion Rotation;
     public Vector3 soldierSpawnPos;
     public Vector3 Scale;
+    public Vector3 rot;
     public int NumOfEnemies;
     float spawnRadius = 5f;
     private GUIStyle labelStyle;
     float objectScale;
     string nameBase = "";
     string save;
-    public int NumofWaypoints;
+    public List<GameObject> NumOfWp = new List<GameObject>();
 
     /*private void SpawnObject()
     {
@@ -50,21 +51,37 @@ public class ArmyWindow : EditorWindow
         GameObject objectNull = Instantiate(wp,pos,Quaternion.identity);
         objectNull.transform.position = pos;
         objectNull.name = nameBase;
-        NumofWaypoints++;
+        NumOfWp.Add(objectNull);
     }
 
     public void SpawnSoldier()
     {
+       
+       var spawned = Instantiate(singleSoldierSpawned, pos, Rotation);
+        if(Scale.y <= 0)
+        {
+            Scale.y = 1;
+        }
+        else if(Scale.x <= 0)
+        {
+            Scale.x = 1;
+        }
+        else if(Scale.z <= 0)
+        {
+            Scale.z = 1;
+        }
+        else
+        {
+            spawned.transform.localScale = Scale;
+        }
+       pos = pos + Vector3.right * 3;
+       spawned.life = soldierSet.life;
+       spawned.damage = soldierSet.damage;
+       spawned.velocity = soldierSet.speed;
 
-        Instantiate(singleSoldierSpawned, pos, Rotation);
-        pos = pos + Vector3.right * 2;
-        singleSoldierSpawned.GetComponent<Enemy>().life = soldierSet.life;
-        singleSoldierSpawned.GetComponent<Enemy>().damage = soldierSet.damage;
-        singleSoldierSpawned.GetComponent<Enemy>().velocity = soldierSet.speed;
-        singleSoldierSpawned.transform.localScale = Scale;
 
-        
-    } 
+
+    }
 
     private void OnGUI()
     {
@@ -114,12 +131,15 @@ public class ArmyWindow : EditorWindow
 
         soldierSet = (SoldierSettings)EditorGUILayout.ObjectField("Soldier Configuration", soldierSet, typeof(SoldierSettings), false);
 
-        if(soldierSet != null)
+        if (soldierSet != null)
         {
             soldierSet.life = EditorGUILayout.IntField("Life", soldierSet.life);
             soldierSet.speed = EditorGUILayout.IntField("Speed", soldierSet.speed);
             soldierSet.damage = EditorGUILayout.IntField("Damage", soldierSet.damage);
-            soldierSet.prefabSoldier = (GameObject)EditorGUILayout.ObjectField("Soldier Prefab", soldierSet.prefabSoldier,typeof(GameObject), false);
+             Scale = EditorGUILayout.Vector3Field("Scale", Scale);
+             rot = EditorGUILayout.Vector3Field("rot", rot);
+            Rotation = Quaternion.Euler(rot);
+            singleSoldierSpawned = (Enemy)EditorGUILayout.ObjectField("Soldier Prefab", singleSoldierSpawned, typeof(Enemy), false);
             EditorUtility.SetDirty(soldierSet);
         }
 
@@ -161,14 +181,14 @@ public class ArmyWindow : EditorWindow
 
         if (GUILayout.Button("Spawn Army"))
         {
-            for (int i = 0; i < NumofWaypoints; i++)
+            foreach (var item in NumOfWp)
             {
-                Instantiate(singleSoldierSpawned, wp.transform.position, Rotation);
-                singleSoldierSpawned.GetComponent<Enemy>().life = soldierSet.life;
-                singleSoldierSpawned.GetComponent<Enemy>().damage = soldierSet.damage;
-                singleSoldierSpawned.GetComponent<Enemy>().velocity = soldierSet.speed;
-                singleSoldierSpawned.transform.localScale = Scale;
 
+                var spawned = Instantiate(singleSoldierSpawned, item.transform.position, Rotation);
+                spawned.life = soldierSet.life;
+                spawned.damage = soldierSet.damage;
+                spawned.velocity = soldierSet.speed;
+                spawned.transform.localScale = Scale;
             }
         }
 
