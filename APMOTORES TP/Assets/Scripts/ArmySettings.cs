@@ -5,7 +5,7 @@ public class ArmySettings : ScriptableObject
 {
     public SoldierSettings soldierPreset;
     public int numberOfSoldiers;
-    public bool squareFormation;
-    public bool triangleFormation;
-    public bool circleFormation;
+    public bool queueFormation;
+    public bool randomFormation;
+    public  Vector3 initialPos;
 }

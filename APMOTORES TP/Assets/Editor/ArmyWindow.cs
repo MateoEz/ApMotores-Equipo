@@ -5,41 +5,34 @@ using UnityEditor;
 
 public class ArmyWindow : EditorWindow
 {
-<<<<<<< HEAD:APMOTORES TP/Assets/Mateo/Editor/ArmyWindow.cs
-    [MenuItem("Army/Creator")]
-=======
-  [MenuItem("Army/Creator")]
 
->>>>>>> 964fb300ec491da3a8601f0b75e0055e61981b6c:APMOTORES TP/Assets/Editor/ArmyWindow.cs
-    //[MenuItem("OtraWindow/Sinecesitamos")]
+   [MenuItem("Army/Creator/Soldier Settings")]
     public static void ShowWindow()
     {
         GetWindow(typeof(ArmyWindow));
         
     }
-    ArmySettings armySet;
-    SoldierSettings soldierSet;
-    ScriptableObject soldierConfig;
-    ScriptableObject armyConfig;
-    GameObject wp;
-<<<<<<< HEAD:APMOTORES TP/Assets/Mateo/Editor/ArmyWindow.cs
-    public Enemy singleSoldierSpawned;
-=======
-    public static bool openSecond = false;
+
+
+    public static ArmyWindow Instance;
+    public ArmySettings armySet;
+    public SoldierSettings soldierSet;
+    public ScriptableObject soldierConfig;
+    public ScriptableObject armyConfig;
+    public GameObject wp;
     public GameObject singleSoldierSpawned;
->>>>>>> 964fb300ec491da3a8601f0b75e0055e61981b6c:APMOTORES TP/Assets/Editor/ArmyWindow.cs
     public Vector3 pos;
     public Quaternion Rotation;
     public Vector3 soldierSpawnPos;
     public Vector3 Scale;
-    public Vector3 rot;
     public int NumOfEnemies;
     float spawnRadius = 5f;
     private GUIStyle labelStyle;
     float objectScale;
+    public static bool second;
     string nameBase = "";
     string save;
-    public List<GameObject> NumOfWp = new List<GameObject>();
+    public int NumofWaypoints;
 
     /*private void SpawnObject()
     {
@@ -56,59 +49,46 @@ public class ArmyWindow : EditorWindow
 
     }*/
 
+    public void SpawnSoldier()
+    {
+        //soldierSet.name = soldierSet.prefabSoldier.name;
+        Instantiate(soldierSet.prefabSoldier, soldierSet.initialPos, Rotation);
+        soldierSet.prefabSoldier.GetComponent<Enemy>().life = soldierSet.life;
+        soldierSet.prefabSoldier.GetComponent<Enemy>().damage = soldierSet.damage;
+        soldierSet.prefabSoldier.GetComponent<Enemy>().velocity = soldierSet.speed;
+        soldierSet.prefabSoldier.transform.position = soldierSet.initialPos;
+        Scale = new Vector3(1, 1, 1);
+        soldierSet.prefabSoldier.transform.localScale = Scale;
+        
+    }
+
+    private void Awake()
+    {
+         Instance = this;
+    }
+
     public void SpawnWaypoint()
     {
         GameObject objectNull = Instantiate(wp,pos,Quaternion.identity);
         objectNull.transform.position = pos;
         objectNull.name = nameBase;
-        NumOfWp.Add(objectNull);
+        NumofWaypoints++;
     }
-
-    public void SpawnSoldier()
-    {
-       
-       var spawned = Instantiate(singleSoldierSpawned, pos, Rotation);
-        if(Scale.y <= 0)
-        {
-            Scale.y = 1;
-        }
-        else if(Scale.x <= 0)
-        {
-            Scale.x = 1;
-        }
-        else if(Scale.z <= 0)
-        {
-            Scale.z = 1;
-        }
-        else
-        {
-            spawned.transform.localScale = Scale;
-        }
-       pos = pos + Vector3.right * 3;
-       spawned.life = soldierSet.life;
-       spawned.damage = soldierSet.damage;
-       spawned.velocity = soldierSet.speed;
-
-
-
-    }
-
     private void OnGUI()
     {
-        GUILayout.Label("Create Spawnpoint",EditorStyles.boldLabel);
+        //GUILayout.Label("Create Spawnpoint",EditorStyles.boldLabel);
         EditorGUILayout.Space();
-        wp = EditorGUILayout.ObjectField("Waypoint Prefab", wp, typeof(GameObject), false) as GameObject;
-        EditorGUILayout.Space();
-        pos = EditorGUILayout.Vector3Field("Spawn position", pos);
-        EditorGUILayout.Space();
-        nameBase = EditorGUILayout.TextField("Spawnpoint name", nameBase);
+        //wp = EditorGUILayout.ObjectField("Waypoint Prefab", wp, typeof(GameObject), false) as GameObject;
         EditorGUILayout.Space();
         EditorGUILayout.Space();
+       // nameBase = EditorGUILayout.TextField("Spawnpoint name", nameBase);
+        /*EditorGUILayout.Space();
         EditorGUILayout.Space();
+        EditorGUILayout.Space();*/
         /*spawnRadius = EditorGUILayout.FloatField("Distancia de creacion", spawnRadius);
         objectScale = EditorGUILayout.Slider("Tamaño del objeto", objectScale, 0.5f, 3f);*/
 
-        if (GUILayout.Button("Create spawn position"))
+       /* if (GUILayout.Button("Create spawn position"))
         {
 
             if (wp == null)
@@ -122,39 +102,42 @@ public class ArmyWindow : EditorWindow
                 return;
             }
             SpawnWaypoint();
-        }
-
+        }*/
+       /* if (GUILayout.Button("test"))
+        {
+            second = true;
+            var w = GetWindow<SoldierWindow>();
+            w.Show();
+        }*/
         EditorGUILayout.Space();
         EditorGUILayout.Space();
-
-
-
         GUILayout.Label("Create Soldiers", EditorStyles.boldLabel);
         EditorGUILayout.Space();
 
-        /*if (GUILayout.Button("Create Soldiers Settings"))
+        if (GUILayout.Button("Create Soldiers Settings"))
         {
-            openSecond = true;
             soldierConfig = ScriptableObject.CreateInstance<SoldierSettings>();
             save = "Assets/Scriptable Objects/" + "SoldierConfig.asset";
             Debug.Log("Soldier settings created in the scriptable objects folder");
             AssetDatabase.CreateAsset(soldierConfig, save);
+            second = true;
+            var w = GetWindow<SoldierWindow>();
+            w.Show();
             Save();
+            var ww = GetWindow<ArmyWindow>();
+
         }
 
         EditorGUILayout.Space();
 
-        soldierSet = (SoldierSettings)EditorGUILayout.ObjectField("Soldier Configuration", soldierSet, typeof(SoldierSettings), false);
+        /*soldierSet = (SoldierSettings)EditorGUILayout.ObjectField("Soldier Configuration", soldierSet, typeof(SoldierSettings), false);
 
-        if (soldierSet != null)
+        if(soldierSet != null)
         {
             soldierSet.life = EditorGUILayout.IntField("Life", soldierSet.life);
             soldierSet.speed = EditorGUILayout.IntField("Speed", soldierSet.speed);
             soldierSet.damage = EditorGUILayout.IntField("Damage", soldierSet.damage);
-             Scale = EditorGUILayout.Vector3Field("Scale", Scale);
-             rot = EditorGUILayout.Vector3Field("rot", rot);
-            Rotation = Quaternion.Euler(rot);
-            singleSoldierSpawned = (Enemy)EditorGUILayout.ObjectField("Soldier Prefab", singleSoldierSpawned, typeof(Enemy), false);
+            soldierSet.prefabSoldier = (GameObject)EditorGUILayout.ObjectField("Soldier Prefab", soldierSet.prefabSoldier,typeof(GameObject), false);
             EditorUtility.SetDirty(soldierSet);
         }
 
@@ -170,6 +153,7 @@ public class ArmyWindow : EditorWindow
 
         EditorGUILayout.Space();
         EditorGUILayout.Space();
+        */
         GUILayout.Label("Create Armys", EditorStyles.boldLabel);
         EditorGUILayout.Space();
 
@@ -179,10 +163,13 @@ public class ArmyWindow : EditorWindow
             save = "Assets/Scriptable Objects/" + "ArmyConfig.asset";
             Debug.Log("Army settings created in the scriptable objects folder");
             AssetDatabase.CreateAsset(armyConfig, save);
+            var w = GetWindow<ArmySettingsWindow>();
+            w.a = NumofWaypoints;
+            w.Show();
             Save();
         }
 
-        EditorGUILayout.Space();
+        /*EditorGUILayout.Space();
 
         armySet = (ArmySettings)EditorGUILayout.ObjectField("Army Configuration", armySet, typeof(ArmySettings), false);
 
@@ -198,19 +185,8 @@ public class ArmyWindow : EditorWindow
 
         EditorGUILayout.Space();
 
-
         if (GUILayout.Button("Spawn Army"))
         {
-<<<<<<< HEAD:APMOTORES TP/Assets/Mateo/Editor/ArmyWindow.cs
-            foreach (var item in NumOfWp)
-            {
-
-                var spawned = Instantiate(singleSoldierSpawned, item.transform.position, Rotation);
-                spawned.life = soldierSet.life;
-                spawned.damage = soldierSet.damage;
-                spawned.velocity = soldierSet.speed;
-                spawned.transform.localScale = Scale;
-=======
             if(armySet != null)
             {
                 for (int i = 0; i < NumofWaypoints; i++)
@@ -221,12 +197,11 @@ public class ArmyWindow : EditorWindow
                     singleSoldierSpawned.GetComponent<Enemy>().velocity = soldierSet.speed;
                     singleSoldierSpawned.transform.localScale = Scale;
                 }
->>>>>>> 964fb300ec491da3a8601f0b75e0055e61981b6c:APMOTORES TP/Assets/Editor/ArmyWindow.cs
             }
             else
                 Debug.LogWarning("Error: Please drag Army Settings");
         }
-
+        */
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -238,7 +213,7 @@ public class ArmyWindow : EditorWindow
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
-        */
+
         if (GUILayout.Button("Close"))
         {
             Close();

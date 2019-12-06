@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbdab754e6beea04a95d5b943f9f79bf, type: 3}
-  m_Name: sadfsdf
+  m_Name: ArmyConfig
   m_EditorClassIdentifier: 
-  soldierPreset: {fileID: 0}
-  numberOfSoldiers: 0
-  squareFormation: 0
-  triangleFormation: 0
-  circleFormation: 0
+  soldierPreset: {fileID: 11400000, guid: 96e62daaf2195ba46a244e836057863a, type: 2}
+  numberOfSoldiers: 20
+  queueFormation: 1
+  randomFormation: 0
+  initialPos: {x: 96, y: 0, z: 129}
